@@ -110,7 +110,7 @@
                     }
                 }
 
-                box = row.closest(options.highlighted).find(options.boxes);
+                box = row.closest(options.highlighted).find(options.boxes).eq(0);
 
                 if (!box.length)
                 {
