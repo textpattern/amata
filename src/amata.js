@@ -59,11 +59,11 @@
 
         this.closest('form').not('.amata-ready').each(function ()
         {
-            var $this = $(this), button = $this.find(options.button).hide(), actions = $(this).find('select.amata-actions').val(''), selectAll = $(options.selectAll), lastCheck = false;;
+            var $this = $(this), button = $this.find(options.button).hide(), actions = $(this).find('select.amata-actions').val(''), selectAll = $(options.selectAll), lastCheck = false;
 
             methods.registerOptions.call($this);
 
-            selectAll.on('change', function (e)
+            selectAll.on('change', function ()
             {
                 methods.select.call($this, {
                     'checked' : $(this).prop('checked')
@@ -85,7 +85,7 @@
 
                     // Skip actions invoked from clicking links and inputs.
 
-                    if (e.target != this || $this.is('a, :input') || $(e.target).is('a, :input'))
+                    if (e.target !== this || $this.is('a, :input') || $(e.target).is('a, :input'))
                     {
                         return;
                     }
@@ -105,7 +105,7 @@
                     checked = !checked;
                 }
 
-                if (e.shiftKey && form.lastCheck)
+                if (e.shiftKey && lastCheck)
                 {
                     var boxes = $this.find(options.boxes);
                     var start = boxes.index(box);
@@ -131,7 +131,7 @@
                 }
             });
 
-            $this.on('change.amata', options.boxes, function (e)
+            $this.on('change.amata', options.boxes, function ()
             {
                 var box = $(this), boxes = $(options.boxes);
 
@@ -147,7 +147,7 @@
                 }
             });
 
-            actions.on('change.amata', function (e)
+            actions.on('change.amata', function ()
             {
                 var selected = $(this).find('option:selected').eq(0);
                 $this.trigger('amata-action-change.amata').find('.amata-active-step').remove();
@@ -227,7 +227,7 @@
 
             if (!option.text() && options.label)
             {
-                option.text(settings.label);
+                option.text(options.label);
             }
 
             option.data('amata-method', options.html);
