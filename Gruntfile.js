@@ -72,4 +72,5 @@ module.exports = function (grunt)
     grunt.registerTask('test', ['jshint', 'qunit']);
     grunt.registerTask('build', ['uglify']);
     grunt.registerTask('default', ['test', 'build']);
+    grunt.registerTask('travis', ['jshint', 'qunit', 'build']);
 };
