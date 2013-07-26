@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Dense QUnit test</title>
+    <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.12.0.css" />
+</head>
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+
+    <form method="post" action="index.html">
+        <table class="txp-list">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" name="amata-select-all" value="0" /></th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td><input type="checkbox" name="selected[]" class="checkbox" value="1" /></td>
+                    <td>Item</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="multi-edit">
+
+            <select class="amata-actions" name="edit_method">
+                <option value="">With selected…</option>
+                <option value="change-section">Change section</option>
+                <option value="change-comments">Change comments</option>
+                <option value="delete">Delete</option>
+            </select>
+
+            <div data-amata-option="change-section">
+                <select name="section">
+                    <option value=""></option>
+                    <option value="authors">authors</option>
+                    <option value="blog">blog</option>
+                    <option value="home">home</option>
+                </select>
+            </div>
+
+            <div data-amata-option="change-comments">
+                <input type="radio" name="Annotate" id="Annotate-0" value="0" />
+                <label for="Annotate-0">Off</label>
+                <input type="radio" name="Annotate" id="Annotate-1" checked="checked" value="1" />
+                <label for="Annotate-1">On</label>
+            </div>
+
+            <input type="submit" value="Go" />
+        </div>
+    </form>
+
+    <script src="http://code.jquery.com/qunit/qunit-1.12.0.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="../src/amata.js"></script>
+    <script src="tests.js"></script>
+</body>
+</html>
