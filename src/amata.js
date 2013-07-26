@@ -91,7 +91,7 @@
 
             $this.on('click.amata', options.clickRegion, function (e)
             {
-                var $this = $(this), self = ($(e.target).is(options.boxes) || $(this).is(options.boxes)), box, checked;
+                var row = $(this), self = ($(e.target).is(options.boxes) || row.is(options.boxes)), box, checked;
 
                 if (!self)
                 {
@@ -104,13 +104,13 @@
 
                     // Skip actions invoked from clicking links and inputs.
 
-                    if (e.target !== this || $this.is('a, :input') || $(e.target).is('a, :input'))
+                    if (e.target !== this || row.is('a, :input') || $(e.target).is('a, :input'))
                     {
                         return;
                     }
                 }
 
-                box = $this.closest(options.highlighted).find(options.boxes).eq(0);
+                box = row.closest(options.highlighted).find(options.boxes);
 
                 if (!box.length)
                 {
