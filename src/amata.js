@@ -1,5 +1,5 @@
 /**
- * Amata - List multi-selection multi-action form multi-task executer
+ * Amata.js - List multi-selection multi-action form multi-task executer
  *
  * @link    https://github.com/textpattern/amata
  * @license MIT
