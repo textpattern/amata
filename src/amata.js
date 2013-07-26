@@ -47,7 +47,7 @@
     }
     else
     {
-        factory(window.jQuery);
+        factory(window.jQuery || window.Zepto);
     }
 }(function ($)
 {
@@ -166,7 +166,11 @@
 
             actions.on('change.amata', function ()
             {
-                var selected = $(this).find('option:selected').eq(0);
+                var selected = $(this).find('option').filter(function ()
+                {
+                    return $(this).prop('selected');
+                }).eq(0);
+
                 $this.trigger('amata-action-change.amata').find('.amata-active-step').remove();
 
                 if (!selected.val())
@@ -287,7 +291,7 @@
                     {
                         methods.addOption.call($this, {
                             'label' : null,
-                            'html'  : option.eq(0).contents(),
+                            'html'  : option.eq(0).html(),
                             'value' : $(this).val()
                         });
                     }
