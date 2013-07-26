@@ -2,11 +2,19 @@ module.exports = function (grunt)
 {
     'use strict';
 
+    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+
+        watch: {
+            js: {
+                files: 'src/*.js',
+                tasks: ['jshint', 'uglify']
+            }
+        },
 
         uglify: {
             options: {
