@@ -1,5 +1,7 @@
 h1. Amata.js
 
+!https://travis-ci.org/textpattern/amata.png?branch=master!:https://travis-ci.org/textpattern/amata
+
 Next generation of Textpattern CMS' list multi-editor, now as its own jQuery component. *Currently under development*.
 
 h2. Install
