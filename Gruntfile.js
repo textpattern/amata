@@ -5,6 +5,7 @@ module.exports = function (grunt)
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-qunit');
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -29,7 +30,7 @@ module.exports = function (grunt)
         },
 
         jshint: {
-            files: ['Gruntfile.js', 'src/*.js'],
+            files: ['Gruntfile.js', 'src/*.js', 'test/*.js'],
             options: {
                 bitwise: true,
                 camelcase: true,
@@ -53,13 +54,22 @@ module.exports = function (grunt)
                     jQuery: true,
                     Zepto: true,
                     define: true,
-                    module: true
+                    module: true,
+                    test: true,
+                    equal: true
                 }
             }
+        },
+
+        qunit: {
+            options: {
+                timeout: 60000
+            },
+            all: ['test/*.html']
         }
     });
 
-    grunt.registerTask('test', ['jshint']);
+    grunt.registerTask('test', ['jshint', 'qunit']);
     grunt.registerTask('build', ['uglify']);
     grunt.registerTask('default', ['test', 'build']);
 };
