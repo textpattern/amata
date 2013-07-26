@@ -86,9 +86,7 @@
 
             selectAll.on('change', function ()
             {
-                methods.select.call($this, {
-                    'checked' : $(this).prop('checked')
-                });
+                $(options.boxes).prop('checked', $(this).prop('checked')).change();
             });
 
             $this.on('click.amata', options.clickRegion, function (e)
@@ -128,14 +126,12 @@
 
                 if (e.shiftKey && lastCheck)
                 {
-                    var boxes = $this.find(options.boxes);
-                    var start = boxes.index(box);
-                    var end = boxes.index(lastCheck);
+                    var boxes = $this.find(options.boxes), start = boxes.index(box), end = boxes.index(lastCheck);
 
-                    methods.select({
-                        'range'   : [Math.min(start, end), Math.max(start, end) + 1],
-                        'checked' : !checked
-                    });
+                    boxes
+                        .slice(Math.min(start, end), Math.max(start, end) + 1)
+                        .prop('checked', !checked)
+                        .change();
                 }
                 else if (!self)
                 {
@@ -299,55 +295,6 @@
             });
 
             multiOptions.remove();
-        });
-    };
-
-    /**
-     * Selects rows based on supplied arguments.
-     *
-     * Only one of the filters applies at a time.
-     *
-     * @param  {object}  options
-     * @param  {array}   options.index   Indexes to select
-     * @param  {array}   options.range   Select index range, takes [min, max]
-     * @param  {array}   options.value   Values to select
-     * @param  {boolean} options.checked TRUE to check, FALSE to uncheck
-     * @return {object}  methods
-     */
-
-    methods.select = function (options)
-    {
-        options = $.extend({
-            'index'   : null,
-            'range'   : null,
-            'value'   : null,
-            'checked' : true
-        }, options);
-
-        return this.each(function ()
-        {
-            var obj = $(this).find('[name="selected[]"]');
-
-            if (options.value !== null)
-            {
-                obj = obj.filter(function ()
-                {
-                    return $.inArray($(this).val(), options.value) !== -1;
-                });
-            }
-            else if (options.index !== null)
-            {
-                obj = obj.filter(function (index)
-                {
-                    return $.inArray(index, options.index) !== -1;
-                });
-            }
-            else if (options.range !== null)
-            {
-                obj = obj.slice(options.range[0], options.range[1]);
-            }
-
-            obj.prop('checked', options.checked).change();
         });
     };
 
