@@ -1,3 +1,22 @@
 h1. Amata.js
 
-p. Next generation of Textpattern CMS' list multi-editor, now as its own jQuery component. *Currently under development*.
+Next generation of Textpattern CMS' list multi-editor, now as its own jQuery component. *Currently under development*.
+
+h2. Install
+
+Using "Bower":http://bower.io:
+
+bc. $ bower install amata
+
+h2. Build
+
+Amata.js uses "Grunt":http://gruntjs.com to run tasks. First make sure that you have all base dependencies installed by running npm in the repository's directory:
+
+bc. $ cd amata
+$ npm install
+
+After you have installed all dependencies, you will be able to run tasks using Grunt, like building and testing:
+
+bc. $ grunt [task]
+
+Where the @[task]@ is one of @watch@, @test@ or @build@.
