@@ -59,12 +59,28 @@
      * @var {Object}
      */
 
-    var methods = {}, inputs = 'a, input, textarea, select, button';
+    var methods = {},
+
+    /**
+     * Interactable inputs, excluded from the alternate click region.
+     *
+     * @var {String}
+     */
+
+    inputs = 'a, input, textarea, select, button';
 
     /**
      * Initializes the multi-editor.
      *
-     * @param {Object} [options={}] Options
+     * @param    {Object} [options={}]     Options
+     * @param    {String} [selectAll]      Selector for finding a "select all" checkbox toggle
+     * @param    {String} [button]         Selector for finding the form's submit button
+     * @param    {String} [boxes]          Selector for finding each row's checkbox
+     * @param    {String} [highlighted]    Selector for finding highlighted region
+     * @param    {String} [selectedClass]  Class added to selected rows
+     * @param    {String} [clickRegion]    Selector for find clickable region
+     * @method   init
+     * @memberof jQuery.fn.amata
      */
 
     methods.init = function (options)
@@ -200,11 +216,13 @@
     /**
      * Adds a multi-edit option.
      *
-     * @param  {object} options
-     * @param  {string} options.label The option's label
-     * @param  {string} options.value The option's value
-     * @param  {string} options.html  The second step HTML
-     * @return {object} this
+     * @param    {Object} options
+     * @param    {String} options.label The option's label
+     * @param    {String} options.value The option's value
+     * @param    {String} options.html  The second step HTML
+     * @return   {Object} this
+     * @method   addOption
+     * @memberof jQuery.fn.amata
      * @example
      * $('form').amata('addOption', {
      *  'label' : 'Delete',
