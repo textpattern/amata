@@ -17,8 +17,8 @@
     },
     "licenses": [
         {
-            "type": "#",
-            "url": "#"
+            "type": "MIT",
+            "url": "https://github.com/textpattern/amata/blob/master/LICENSE"
         }
     ],
     "devDependencies": {
