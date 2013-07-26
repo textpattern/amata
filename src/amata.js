@@ -59,7 +59,7 @@
      * @var {Object}
      */
 
-    var methods = {};
+    var methods = {}, inputs = 'a, input, textarea, select, button';
 
     /**
      * Initializes the multi-editor.
@@ -104,7 +104,7 @@
 
                     // Skip actions invoked from clicking links and inputs.
 
-                    if (e.target !== this || row.is('a, :input') || $(e.target).is('a, :input'))
+                    if (e.target !== this || row.is(inputs) || $(e.target).is(inputs))
                     {
                         return;
                     }
