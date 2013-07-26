@@ -1,0 +1,352 @@
+/**
+ * Amata - List multi-selection multi-action form multi-task executer
+ *
+ * @link    https://github.com/textpattern/amata
+ * @license GPLv2
+ */
+
+/**
+ * @name jQuery
+ * @class
+ */
+
+/**
+ * @name fn
+ * @class
+ * @memberOf jQuery
+ */
+
+(function (factory)
+{
+    'use strict';
+
+    if (typeof define === 'function' && define.amd)
+    {
+        define(['jquery'], factory);
+    }
+    else
+    {
+        factory(window.jQuery);
+    }
+}(function ($)
+{
+    'use strict';
+
+    /**
+     * Methods.
+     *
+     * @var {Object}
+     */
+
+    var methods = {};
+
+    /**
+     * Initializes the multi-editor.
+     *
+     * @param {Object} [options={}] Options
+     */
+
+    methods.init = function (options)
+    {
+        options = $.extend({
+            'selectAll'     : '[name=amata-select-all]',
+            'button'        : '[type=submit]',
+            'boxes'         : '[name="selected[]"]',
+            'highlighted'   : 'tr',
+            'selectedClass' : 'highlighted',
+            'clickRegion'   : 'table tbody tr td'
+        }, options);
+
+        this.closest('form').not('.amata-ready').each(function ()
+        {
+            var $this = $(this), button = $this.find(options.button).hide(), actions = $(this).find('select.amata-actions').val(''), selectAll = $(options.selectAll), lastCheck = false;;
+
+            methods.registerOptions.call($this);
+
+            selectAll.on('change', function (e)
+            {
+                methods.select.call($this, {
+                    'checked' : $(this).prop('checked')
+                });
+            });
+
+            $this.on('click.amata', options.clickRegion, function (e)
+            {
+                var $this = $(this), self = ($(e.target).is(options.boxes) || $(this).is(options.boxes)), box, checked;
+
+                if (!self)
+                {
+                    // Clicking the row, but without holding CTRL/ALT.
+
+                    if (!e.altKey && !e.ctrlKey)
+                    {
+                        return;
+                    }
+
+                    // Skip actions invoked from clicking links and inputs.
+
+                    if (e.target != this || $this.is('a, :input') || $(e.target).is('a, :input'))
+                    {
+                        return;
+                    }
+                }
+
+                box = $this.closest(options.highlighted).find(options.boxes).eq(0);
+
+                if (!box.length)
+                {
+                    return;
+                }
+
+                checked = box.prop('checked');
+
+                if (self)
+                {
+                    checked = !checked;
+                }
+
+                if (e.shiftKey && form.lastCheck)
+                {
+                    var boxes = $this.find(options.boxes);
+                    var start = boxes.index(box);
+                    var end = boxes.index(lastCheck);
+
+                    methods.select({
+                        'range'   : [Math.min(start, end), Math.max(start, end) + 1],
+                        'checked' : !checked
+                    });
+                }
+                else if (!self)
+                {
+                    box.prop('checked', !checked).change();
+                }
+
+                if (checked === false)
+                {
+                    lastCheck = box;
+                }
+                else
+                {
+                    lastCheck = null;
+                }
+            });
+
+            $this.on('change.amata', options.boxes, function (e)
+            {
+                var box = $(this), boxes = $(options.boxes);
+
+                if (box.prop('checked'))
+                {
+                    box.closest(options.highlighted).addClass(options.selectedClass);
+                    selectAll.prop('checked', boxes.filter(':checked').length === boxes.length);
+                }
+                else
+                {
+                    box.closest(options.highlighted).removeClass(options.selectedClass);
+                    selectAll.prop('checked', false);
+                }
+            });
+
+            actions.on('change.amata', function (e)
+            {
+                var selected = $(this).find('option:selected').eq(0);
+                $this.trigger('amata-action-change.amata').find('.amata-active-step').remove();
+
+                if (!selected.val())
+                {
+                    button.hide();
+                    return;
+                }
+
+                if (selected.data('amata-method'))
+                {
+                    $(this).after($('<div />').attr('class', 'amata-active-step').html(selected.data('amata-method')));
+                    button.show();
+                }
+                else
+                {
+                    button.hide();
+                    $this.trigger('submit.amata');
+                }
+            });
+
+            $this.addClass('.amata-ready');
+        });
+
+        return this;
+    };
+
+    /**
+     * Adds a multi-edit option.
+     *
+     * @param  {object} options
+     * @param  {string} options.label The option's label
+     * @param  {string} options.value The option's value
+     * @param  {string} options.html  The second step HTML
+     * @return {object} this
+     * @example
+     * $('form').amata('addOption', {
+     *  'label' : 'Delete',
+     *  'value' : 'delete'
+     * });
+     */
+
+    methods.addOption = function (options)
+    {
+        options = $.extend({
+            'label' : null,
+            'value' : null,
+            'html'  : null
+        }, options);
+
+        var $this = this.closest('form').find('.amata-actions').eq(0).val(''), exists = false;
+
+        if (!options.value || !$this.length)
+        {
+            return this;
+        }
+
+        var option = $this.find('option').filter(function ()
+        {
+            return $(this).val() === options.value;
+        }).eq(0);
+
+        exists = (option.length !== 0);
+
+        if (!exists)
+        {
+            option = $('<option />');
+        }
+
+        if (!exists || !option.data('amata-method'))
+        {
+            if (!option.val())
+            {
+                option.val(options.value);
+            }
+
+            if (!option.text() && options.label)
+            {
+                option.text(settings.label);
+            }
+
+            option.data('amata-method', options.html);
+
+            if (!exists)
+            {
+                $this.append(option);
+            }
+        }
+
+        return this;
+    };
+
+    /**
+     * Registers multi-edit options from the document.
+     *
+     * @return   {Object} this
+     * @method   registerOptions
+     * @memberof jQuery.fn.amata
+     */
+
+    methods.registerOptions = function ()
+    {
+        return this.each(function ()
+        {
+            var $this = $(this), multiOptions = $this.find('[data-amata-option]');
+
+            $this.find('select.amata-actions option').each(function ()
+            {
+                var value = $(this).val();
+
+                if (value)
+                {
+                    var option = multiOptions.filter(function ()
+                    {
+                        return $(this).attr('data-amata-option') === value;
+                    });
+
+                    if (option.length > 0)
+                    {
+                        methods.addOption.call($this, {
+                            'label' : null,
+                            'html'  : option.eq(0).contents(),
+                            'value' : $(this).val()
+                        });
+                    }
+                }
+            });
+
+            multiOptions.remove();
+        });
+    };
+
+    /**
+     * Selects rows based on supplied arguments.
+     *
+     * Only one of the filters applies at a time.
+     *
+     * @param  {object}  options
+     * @param  {array}   options.index   Indexes to select
+     * @param  {array}   options.range   Select index range, takes [min, max]
+     * @param  {array}   options.value   Values to select
+     * @param  {boolean} options.checked TRUE to check, FALSE to uncheck
+     * @return {object}  methods
+     */
+
+    methods.select = function (options)
+    {
+        options = $.extend({
+            'index'   : null,
+            'range'   : null,
+            'value'   : null,
+            'checked' : true
+        }, options);
+
+        return this.each(function ()
+        {
+            var obj = $(this).find('[name="selected[]"]');
+
+            if (options.value !== null)
+            {
+                obj = obj.filter(function ()
+                {
+                    return $.inArray($(this).val(), options.value) !== -1;
+                });
+            }
+            else if (options.index !== null)
+            {
+                obj = obj.filter(function (index)
+                {
+                    return $.inArray(index, options.index) !== -1;
+                });
+            }
+            else if (options.range !== null)
+            {
+                obj = obj.slice(options.range[0], options.range[1]);
+            }
+
+            obj.prop('checked', options.checked).change();
+        });
+    };
+
+    /**
+     * Multi-edit functions.
+     *
+     * @param    {String|Object} [method=init] Called method
+     * @param    {Object}        [options={}]  Options passed to the method
+     * @class    amata
+     * @memberof jQuery.fn
+     */
+
+    $.fn.amata = function (method, options)
+    {
+        if ($.type(method) !== 'string' || $.type(methods[method]) !== 'function')
+        {
+            options = method;
+            method = 'init';
+        }
+
+        return methods[method].call(this, options);
+    };
+}));

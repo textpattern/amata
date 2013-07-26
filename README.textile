@@ -1,0 +1,3 @@
+h1. Amata
+
+p. Next generation of Textpattern CMS' list multi-editor, now as its own jQuery component. *Currently under development*.
