@@ -1,0 +1,12 @@
+{
+    "name": "amata",
+    "version": "0.0.0",
+    "main": "src/amata.js",
+    "ignore": [
+        ".*",
+        "test"
+    ],
+    "dependencies": {
+        "jquery": ">=1.7.0"
+    }
+}
