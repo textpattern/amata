@@ -303,13 +303,13 @@
                     var option = multiOptions.filter(function ()
                     {
                         return $(this).attr('data-amata-option') === value;
-                    });
+                    }).eq(0);
 
-                    if (option.length > 0)
+                    if (option.length)
                     {
                         methods.addOption.call($this, {
                             'label' : null,
-                            'html'  : option.eq(0).html(),
+                            'html'  : option.html(),
                             'value' : $(this).val()
                         });
                     }
