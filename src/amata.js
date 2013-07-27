@@ -100,7 +100,7 @@
 
             methods.registerOptions.call($this);
 
-            selectAll.on('change', function ()
+            selectAll.on('change.amata', function ()
             {
                 $(options.boxes).prop('checked', $(this).prop('checked')).change();
             });
@@ -151,7 +151,7 @@
                 }
                 else if (!self)
                 {
-                    box.prop('checked', !checked).change();
+                    box.prop('checked', !checked).trigger('change.amata');
                 }
 
                 if (checked === false)
