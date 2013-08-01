@@ -6,6 +6,7 @@ module.exports = function (grunt)
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-qunit');
+    grunt.loadNpmTasks('grunt-contrib-compress');
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -66,6 +67,26 @@ module.exports = function (grunt)
                 timeout: 60000
             },
             all: ['test/*.html']
+        },
+
+        compress: {
+            main: {
+                options: {
+                    archive: 'dist/<%= pkg.name %>.v<%= pkg.version %>.zip'
+                },
+                files: [
+                    {
+                        src: ['*.textile', 'LICENSE'],
+                        dest: '<%= pkg.name %>/',
+                    },
+                    {
+                        expand: true,
+                        cwd: 'dist/',
+                        src: ['*.js'],
+                        dest: '<%= pkg.name %>/',
+                    }
+                ]
+            }
         }
     });
 
