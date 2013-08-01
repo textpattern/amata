@@ -166,16 +166,16 @@
 
             $this.on('change.amata', options.boxes, function ()
             {
-                var box = $(this), boxes = $(options.boxes);
+                var box = $(this), boxes = $(options.boxes), closest = box.closest(options.highlighted);
 
                 if (box.prop('checked'))
                 {
-                    box.closest(options.highlighted).addClass(options.selectedClass);
+                    closest.addClass(options.selectedClass);
                     selectAll.prop('checked', boxes.filter(':checked').length === boxes.length);
                 }
                 else
                 {
-                    box.closest(options.highlighted).removeClass(options.selectedClass);
+                    closest.removeClass(options.selectedClass);
                     selectAll.prop('checked', false);
                 }
             });
