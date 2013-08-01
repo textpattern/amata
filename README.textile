@@ -21,4 +21,4 @@ After you have installed all dependencies, you will be able to run tasks using G
 
 bc. $ grunt [task]
 
-Where the @[task]@ is one of @watch@, @test@ or @build@.
+Where the @[task]@ is one of @watch@, @test@, @build@ or @release[:patch | :minor | :major]@.

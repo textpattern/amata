@@ -7,6 +7,8 @@ module.exports = function (grunt)
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-contrib-compress');
+    grunt.loadNpmTasks('grunt-bumpup');
+    grunt.loadNpmTasks('grunt-tagrelease');
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -69,6 +71,18 @@ module.exports = function (grunt)
             all: ['test/*.html']
         },
 
+        bumpup: {
+            files: ['package.json', 'bower.json']
+        },
+
+        tagrelease: {
+            file: 'package.json',
+            commit:  true,
+            message: 'Marks v%version%.',
+            prefix:  '',
+            annotate: true
+        },
+
         compress: {
             main: {
                 options: {
@@ -88,6 +102,24 @@ module.exports = function (grunt)
                 ]
             }
         }
+    });
+
+    grunt.registerTask('updatepkg', 'Reloads package.json to memory.', function ()
+    {
+        grunt.config.set('pkg', grunt.file.readJSON('package.json'));
+    });
+
+    grunt.registerTask('release', 'Creates a new release. Usage:\ngrunt release[:patch | :minor | :major]', function (type)
+    {
+        if (!type)
+        {
+            type = 'patch';
+        }
+
+        grunt.task.run('bumpup:' + type);
+        grunt.task.run('tagrelease');
+        grunt.task.run('updatepkg');
+        grunt.task.run('compress');
     });
 
     grunt.registerTask('test', ['jshint', 'qunit']);
