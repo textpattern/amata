@@ -216,10 +216,10 @@
     /**
      * Adds a multi-edit option.
      *
-     * @param    {Object} options
-     * @param    {String} options.label The option's label
-     * @param    {String} options.value The option's value
-     * @param    {String} options.html  The second step HTML
+     * @param    {Object} [options={}]
+     * @param    {String} [options.label] The option's label
+     * @param    {String} [options.value] The option's value
+     * @param    {String} [options.html]  The second step HTML
      * @return   {Object} this
      * @method   addOption
      * @memberof jQuery.fn.amata
