@@ -72,13 +72,13 @@
     /**
      * Initializes the multi-editor.
      *
-     * @param    {Object} [options={}]     Options
-     * @param    {String} [selectAll]      Selector for finding a "select all" checkbox toggle
-     * @param    {String} [button]         Selector for finding the form's submit button
-     * @param    {String} [boxes]          Selector for finding each row's checkbox
-     * @param    {String} [highlighted]    Selector for finding highlighted region
-     * @param    {String} [selectedClass]  Class added to selected rows
-     * @param    {String} [clickRegion]    Selector for find clickable region
+     * @param    {Object} [options={}]            Options
+     * @param    {String} [options.selectAll]     Selector for finding a "select all" checkbox toggle
+     * @param    {String} [options.button]        Selector for finding the form's submit button
+     * @param    {String} [options.boxes]         Selector for finding each row's checkbox
+     * @param    {String} [options.highlighted]   Selector for finding highlighted region
+     * @param    {String} [options.selectedClass] Class added to selected rows
+     * @param    {String} [options.clickRegion]   Selector for find clickable region
      * @return   {Object} this
      * @method   init
      * @memberof jQuery.fn.amata
