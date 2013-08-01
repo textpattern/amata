@@ -116,10 +116,12 @@ module.exports = function (grunt)
             type = 'patch';
         }
 
+        grunt.task.run('test');
         grunt.task.run('bumpup:' + type);
-        grunt.task.run('tagrelease');
         grunt.task.run('updatepkg');
+        grunt.task.run('build');
         grunt.task.run('compress');
+        grunt.task.run('tagrelease');
     });
 
     grunt.registerTask('test', ['jshint', 'qunit']);
