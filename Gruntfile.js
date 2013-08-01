@@ -91,13 +91,13 @@ module.exports = function (grunt)
                 files: [
                     {
                         src: ['*.textile', 'LICENSE'],
-                        dest: '<%= pkg.name %>/',
+                        dest: '<%= pkg.name %>/'
                     },
                     {
                         expand: true,
                         cwd: 'dist/',
                         src: ['*.js'],
-                        dest: '<%= pkg.name %>/',
+                        dest: '<%= pkg.name %>/'
                     }
                 ]
             }
