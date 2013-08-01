@@ -79,6 +79,7 @@
      * @param    {String} [highlighted]    Selector for finding highlighted region
      * @param    {String} [selectedClass]  Class added to selected rows
      * @param    {String} [clickRegion]    Selector for find clickable region
+     * @return   {Object} this
      * @method   init
      * @memberof jQuery.fn.amata
      */
